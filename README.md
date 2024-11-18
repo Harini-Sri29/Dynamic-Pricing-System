@@ -103,13 +103,13 @@ Install dependencies:
 
 3.Create two collections:
  
-    products (fields: name, price, stock, demand).
+ products (fields: name, price, stock, demand).
 
-    ![MongoDB products Database](https://github.com/user-attachments/assets/9f39f41f-7f95-4188-80a6-b1b9b26192eb)
+ ![MongoDB products Database](https://github.com/user-attachments/assets/9f39f41f-7f95-4188-80a6-b1b9b26192eb)
 
-    users (fields: username, password).
+ users (fields: username, password).
 
-    ![MongoDB users database](https://github.com/user-attachments/assets/30abf202-ba19-4b9c-a79b-04be34ad6eba)
+ ![MongoDB users database](https://github.com/user-attachments/assets/30abf202-ba19-4b9c-a79b-04be34ad6eba)
 
 
 4.Insert sample data into the collections.
@@ -177,6 +177,8 @@ http://localhost:5000
 
 ![Add to Cart Feature ](https://github.com/user-attachments/assets/42e80f91-f299-4d16-b6a9-19be405a5ced)
 
+4.Sort feature 
+
 ![Sort by Feature](https://github.com/user-attachments/assets/01042133-dabc-4f36-ad97-759986d1ce97)
 
 
@@ -209,6 +211,16 @@ The forecasting.js script adjusts demand factors weekly based on trends.
 Input: Historical sales data and weeks to forecast.
 
 Output: Demand trends visualized using Chart.js graphs.
+
+![Screenshot 2024-11-18 152842](https://github.com/user-attachments/assets/fdc0cb5b-c46f-4952-9f82-a461ba7086de)
+
+![Product Demand Forecasting](https://github.com/user-attachments/assets/3ca8377c-ed8a-4e73-ae30-989cd4ed1556)
+
+![Visualize Forecasting](https://github.com/user-attachments/assets/2b6ef622-6f57-483b-9ff3-2c3d58aab518)
+
+
+
+
 ## API Endpoints
 
 Fetch product details.
