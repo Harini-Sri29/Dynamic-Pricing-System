@@ -13,9 +13,11 @@ The Dynamic Pricing System automates price adjustments to maximize profit while 
 ## Features
 1.Admin Panel
 
- 1.View product pricing, stock, and demand trends.
- 2.Adjust prices manually or rely on automated algorithms.
- 3.Access analytics and demand forecasting graphs.
+   1.View product pricing, stock, and demand trends.
+  
+   2.Adjust prices manually or rely on automated algorithms.
+  
+   3.Access analytics and demand forecasting graphs.
 
 2.User Interface
     
@@ -45,20 +47,30 @@ Version Control: Git
 DynamicPricingSystem/
 
 ├── node_modules/          # Installed dependencies
+
 ├── public/
+
 │   ├── login.html         # Login page
+
 │   ├── user.html          # User dashboard
+
 │   ├── admin.html         # Admin panel
+
 │   ├── images/            # Product images
+
 │   └── forecasting.js     # Forecasting logic
+
 ├── package.json           # Project metadata
+
 ├── server.js              # Backend logic
+
 └── README.md              # Documentation
 
 ## Setup and Installation
 ## Prerequisites
 
 Node.js and npm installed.
+
 MongoDB installed and running locally or on a cloud service.
 
 ## Installation Steps
@@ -77,10 +89,12 @@ Install dependencies:
 
 2.Create a database: DynamicPricingDB.
 ![Dynamic Pricing DB](https://github.com/user-attachments/assets/d799cdc3-52ab-4397-8ae3-f5113b04e5ae)
+
 3.Create two collections:
  
     products (fields: name, price, stock, demand).   
     users (fields: username, password).
+    
 4.Insert sample data into the collections.
 
 ## Run the Application
@@ -95,10 +109,20 @@ http://localhost:5000
 ## Usage
 ## Admin Functionalities
 
+
 1.Login to the Admin Panel.
+![Admin Login](https://github.com/user-attachments/assets/2d2c6047-3a07-4914-8fcc-61662d3f009d)
+
 2.View product list with price, stock, and demand.
+![Load Products in Admin Dashboard](https://github.com/user-attachments/assets/6db67e1c-0ebf-474e-b859-643381a9171f)
+
 3.Adjust product prices manually or let the system handle automatic pricing.
+![Update Prices Dynamically Based on Stock,Demand and Competitor Price](https://github.com/user-attachments/assets/9f684bdb-42cc-4256-8efd-bb441adcd592)
+
 4.Analyze demand and inventory with graphs
+![Product Demand Forecasting](https://github.com/user-attachments/assets/235de709-e662-48ca-8fc8-bfd718a7dda2)
+
+![Visualize Forecasting](https://github.com/user-attachments/assets/1d3de216-e0f5-452a-a209-1261f185c9b0)
 
 ## User Functionalities
 
