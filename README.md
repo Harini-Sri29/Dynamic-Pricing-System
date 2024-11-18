@@ -11,7 +11,7 @@ Modern e-commerce businesses face challenges in pricing products dynamically bas
 The Dynamic Pricing System automates price adjustments to maximize profit while staying competitive. Admins have full control over analytics, while users experience fair pricing based on real-time market conditions.
 
 ## Features
-1.Admin Panel
+##1.Admin Panel
 
    1.View product pricing, stock, and demand trends.
   
