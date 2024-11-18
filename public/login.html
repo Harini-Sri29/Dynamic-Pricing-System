@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Dynamic Pricing System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      text-align: center;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      z-index: 10;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #00d4ff;
+      font-size: 2rem;
+      text-shadow: 0 0 15px #00d4ff, 0 0 30px #00d4ff;
+    }
+
+    .cube {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: -60px; 
+      left: 50%;
+      transform-style: preserve-3d;
+      animation: rotateCube 5s infinite linear;
+      z-index: 5; 
+      margin-left: -50px; 
+    }
+    .cube div {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: #0d6efd;
+      border: 1px solid #00d4ff;
+      box-shadow: 0 0 20px #00d4ff, 0 0 30px #00d4ff inset;
+      border-radius: 5px;
+    }
+    .cube .front  { transform: translateZ(50px); }
+    .cube .back   { transform: rotateY(180deg) translateZ(50px); }
+    .cube .left   { transform: rotateY(-90deg) translateZ(50px); }
+    .cube .right  { transform: rotateY(90deg) translateZ(50px); }
+    .cube .top    { transform: rotateX(90deg) translateZ(50px); }
+    .cube .bottom { transform: rotateX(-90deg) translateZ(50px); }
+
+    @keyframes rotateCube {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+
+    form {
+      display: block;
+      margin-top: 20px;
+    }
+    input {
+      width: 80%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: none;
+      font-size: 1rem;
+      box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+    }
+    button {
+      width: 80%;
+      padding: 12px;
+      background: linear-gradient(135deg, #00aaff, #0077ff);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+    button:hover {
+      background: linear-gradient(135deg, #0077ff, #0056b3);
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 212, 255, 1);
+    }
+
+    a {
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .back-to-login {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #ff6347;
+      padding: 5px 10px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    .back-to-login:hover {
+      background: #ff4500;
+    }
+    .login-options {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .login-option {
+      background: linear-gradient(135deg, #0077ff, #00d4ff);
+      color: white;
+      font-size: 1.2rem;
+      font-weight: bold;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 212, 255, 0.8);
+    }
+    .login-option:hover {
+      background: linear-gradient(135deg, #0056b3, #00aaff);
+      transform: scale(1.1);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 212, 255, 1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="register-container">
+    <div class="cube">
+      <div class="front"></div>
+      <div class="back"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="top"></div>
+      <div class="bottom"></div>
+    </div>
+    <h1>Register</h1>
+    <form id="register-form">
+      <input type="text" id="new-username" placeholder="Username" required>
+      <input type="password" id="new-password" placeholder="Password" required>
+      <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="javascript:void(0);" id="toggle-login">Login here</a></p>
+  </div>
+
+  <div class="container" id="login-container" style="display:none;">
+    <div class="cube">
+      <div class="front"></div>
+      <div class="back"></div>
+      <div class="left"></div>
+      <div class="right"></div>
+      <div class="top"></div>
+      <div class="bottom"></div>
+    </div>
+    <h1>Login</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Username" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="javascript:void(0);" id="toggle-register">Register here</a></p>
+  </div>
+
+  <script>
+    // Show login form when "Login here" is clicked
+    document.getElementById('toggle-login').addEventListener('click', () => {
+      document.getElementById('register-container').style.display = 'none';
+      document.getElementById('login-container').style.display = 'block';
+    });
+
+    // Show register form when "Register here" is clicked
+    document.getElementById('toggle-register').addEventListener('click', () => {
+      document.getElementById('login-container').style.display = 'none';
+      document.getElementById('register-container').style.display = 'block';
+    });
+
+    // Handle user registration
+    document.getElementById('register-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('new-username').value;
+      const password = document.getElementById('new-password').value;
+
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert('Registration successful');
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('register-container').style.display = 'none';
+      } else {
+        alert(data.error || 'Registration failed');
+      }
+    });
+
+    // Handle user login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        if (data.role === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/user';
+        }
+      } else {
+        alert(data.error || 'Login failed');
+      }
+    });
+  </script>
+</body>
+</html>

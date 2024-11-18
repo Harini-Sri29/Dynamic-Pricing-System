@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); 
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: linear-gradient(135deg, #a2caff, #1e3c63);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      animation: gradientBackground 10s ease infinite; 
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-around;
+      background: linear-gradient(135deg, #a9c9ff, #6a8dff,#003f87); 
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      transition: background 0.3s ease; 
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .navbar a:hover {
+      background: linear-gradient(135deg, #0056b3, #003f87); 
+      transform: scale(1.05); 
+    }
+
+
+    section {
+      display: none;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #444;
+    }
+
+    form, button {
+      margin-bottom: 20px;
+    }
+
+    input, select, button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: #007bff;
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    
+    button {
+      background: linear-gradient(135deg, #a9c9ff, #6a8dff,#003f87); 
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      padding: 12px 20px;
+      border-radius: 5px;
+      transition: background 0.3s ease, transform 0.2s ease; 
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #0056b3, #003f87); 
+      transform: scale(1.05);
+    }
+
+    button:active {
+      background: linear-gradient(135deg, #003f87, #0056b3); 
+      transform: scale(1); 
+    }
+
+    button:focus {
+      outline: none;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); 
+    }
+
+
+    
+    .product-item {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product-item:hover {
+      background-color: #f9f9f9;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    canvas {
+      margin-top: 20px;
+    }
+  
+    #logout-btn {
+      position:relative;
+      bottom: 20px; 
+      left: 50%;  
+      transform: translateX(-50%); 
+      padding: 8px 20px;
+      background: linear-gradient(135deg,#f33232,#e00606); 
+      color: white;
+      font-size: 14px;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      width: 100px; 
+    }
+
+    #logout-btn:hover {
+      
+      background: linear-gradient(135deg, #0f2027, #1e3c63); 
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+
+  </style>
+</head>
+<body>
+  
+  <div class="navbar">
+    <a href="#load-products" onclick="showSection('load-products')">Load Products</a>
+    <a href="#update-prices" onclick="showSection('update-prices')">Update Prices</a>
+    <a href="#add-product" onclick="showSection('add-product')">Add Product</a>
+    <a href="#analytics" onclick="showSection('analytics')">Analytics</a>
+    <a href="#forecasting" onclick="showSection('forecasting')">Forecasting</a>
+  </div>
+
+  <div class="container">
+    <h1>Admin Dashboard</h1>
+
+    <section id="load-products">
+      <h2>Load Products</h2>
+      <button onclick="fetchProducts()">Load Products</button>
+      <div id="product-list"></div>
+    </section>
+
+    <section id="update-prices">
+        <h2>Automatic Price Update</h2>
+        <button onclick="autoUpdatePrices()">Update Prices Automatically</button>
+        <div id="price-update-results" class="hover-box"></div>
+      </section>
+
+    <section id="add-product">
+      <h2>Add New Product</h2>
+      <form id="add-product-form">
+        <input type="text" id="product-name" name="name" placeholder="Product Name" required />
+        <input type="number" id="product-price" name="price" placeholder="Price" required />
+        <input type="number" id="product-stock" name="stock" placeholder="Stock" required />
+        <input type="number" id="product-demand" name="demand" placeholder="Demand" required />
+        <input type="number" id="product-competitor-price" name="competitorPrice" placeholder="Competitor Price" required />
+        <input type="file" id="product-image" name="image" accept="image/*" required />
+        <button type="submit">Add Product</button>
+      </form>
+    </section>
+
+    <section id="analytics">
+      <h2>Product Analytics</h2>
+      <button onclick="fetchAnalytics()">View Analytics</button>
+      <div id="analytics-section"></div>
+    </section>
+
+    <section id="forecasting">
+      <h2>Product Demand Forecasting</h2>
+      <form id="forecast-form" class="forecast-form">
+        <select id="forecast-product" required>
+          <option value="" disabled selected>Select a product</option>
+        </select>
+        <input type="number" id="forecast-futureX" placeholder="Future Period (e.g., weeks)" required>
+        <button type="submit">Generate Forecast</button>
+      </form>
+      <div id="forecast-result"></div>
+      <button id="visualize-forecasting-btn">Visualize Forecasting</button>
+      <canvas id="forecast-chart" width="400" height="200"></canvas>
+    </section>
+  </div>
+  
+<button id="logout-btn" onclick="logout()">Logout</button>
+
+
+
+ <script>
+    function showSection(sectionId) {
+      document.querySelectorAll('section').forEach((section) => {
+        section.classList.remove('active');
+      });
+      document.getElementById(sectionId).classList.add('active');
+    }
+    // Fetch Products to display on page load
+    async function fetchProducts() {
+      const response = await fetch('/api/products');
+      const products = await response.json();
+      const productList = document.getElementById('product-list');
+      const forecastProductSelect = document.getElementById('forecast-product');
+
+      productList.innerHTML = '';
+      forecastProductSelect.innerHTML = '<option value="" disabled selected>Select a product</option>';
+
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product-item';
+        productDiv.innerHTML = `
+          <strong>${product.name}</strong><br>
+          Price: Rs ${product.price}<br>
+          Stock: <input type="number" value="${product.stock}" id="stock-${product._id}"><br>
+          Demand: <input type="number" value="${product.demand}" id="demand-${product._id}"><br>
+          Competitor Price: Rs ${product.competitorPrice}<br>
+          <img src="${product.imageUrl}" alt="${product.name}" style="max-width: 150px; height: auto;"><br>
+          <button onclick="updateProduct('${product._id}')">Update Product</button>`;
+
+        productList.appendChild(productDiv);
+
+        const option = document.createElement('option');
+        option.value = product._id;
+        option.textContent = product.name;
+        forecastProductSelect.appendChild(option);
+      });
+    }
+
+    
+    async function updateProduct(productId) {
+      const newStock = document.getElementById(`stock-${productId}`).value;
+      const newDemand = document.getElementById(`demand-${productId}`).value;
+
+      const response = await fetch('/api/update-product', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:JSON.stringify({
+          productId, 
+          newStock: parseInt(newStock),
+          newDemand: parseInt(newDemand)
+    }),
+  });
+
+  const result = await response.json();
+  if (response.ok) {
+    alert('Product updated successfully');
+    fetchProducts(); 
+  } else {
+    alert(`Error: ${result.error}`);
+  }
+}
+
+
+document.getElementById('add-product-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData();
+  formData.append('name', document.getElementById('product-name').value);
+  formData.append('price', parseFloat(document.getElementById('product-price').value));
+  formData.append('stock', parseInt(document.getElementById('product-stock').value));
+  formData.append('demand', parseInt(document.getElementById('product-demand').value));
+  formData.append('competitorPrice', parseFloat(document.getElementById('product-competitor-price').value));
+  formData.append('image', document.getElementById('product-image').files[0]);
+
+  const response = await fetch('/api/products', {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (response.ok) {
+    alert('Product added successfully');
+    fetchProducts();
+    event.target.reset();
+  } else {
+    alert('Failed to add product');
+  }
+});
+
+    // Fetch product analytics
+      async function fetchAnalytics() {
+        const response = await fetch('/api/analytics');
+        const analytics = await response.json();
+        const analyticsSection = document.getElementById('analytics-section');
+        analyticsSection.innerHTML = analytics.map(a => ` 
+          <div>
+            <strong>${a.name}</strong>:<br>
+            Stock-to-Demand Ratio: ${a.stockToDemandRatio.toFixed(2)}<br>
+            Average Competitor Price: $${a.avgCompetitorPrice.toFixed(2)}
+          </div>
+        `).join('');
+    }
+
+    // Generate demand forecast for a product
+    document.getElementById('forecast-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const productId = document.getElementById('forecast-product').value;
+      const futureX = parseInt(document.getElementById('forecast-futureX').value);
+
+      const response = await fetch('/api/forecast', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, futureX }),
+      });
+
+      const result = await response.json();
+      const forecastResult = document.getElementById('forecast-result');
+      if (response.ok) {
+        forecastResult.innerHTML = `Forecast for ${result.productName}: ${result.prediction.toFixed(2)}`;
+      } else {
+        forecastResult.innerHTML = `Error: ${result.error}`;
+      }
+    });
+
+// Add event listener for the button
+
+document.getElementById('visualize-forecasting-btn').addEventListener('click', function() {
+    
+      fetch('/api/forecast')
+        .then(response => response.json())
+        .then(data => {
+          
+          const productNames = data.map(product => product.name);  
+          const productPrices = data.map(product => product.price);  
+          const productStocks = data.map(product => product.stock);  
+
+          
+          const ctx = document.getElementById('forecast-chart').getContext('2d');
+          const forecastChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: productNames, 
+              datasets: [{
+                label: 'Price Over Time',
+                data: productPrices, 
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false
+              },
+              {
+                label: 'Stock Over Time',
+                data: productStocks, 
+                borderColor: 'rgba(153, 102, 255, 1)',
+                fill: false
+              }]
+            },
+            options: {
+              scales: {
+                x: {
+                  beginAtZero: true
+                }
+              }
+            }
+          });
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    });
+
+    async function autoUpdatePrices() {
+  const response = await fetch('/api/products');
+  const products = await response.json();
+
+  const resultContainer = document.getElementById('price-update-results');
+  resultContainer.innerHTML = ''; 
+
+  products.forEach(async (product) => {
+    const updatedPrice = calculateNewPrice(product.demand, product.competitorPrice);
+    
+    const updateResponse = await fetch(`/api/adjust-price/${product._id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    const updateResult = await updateResponse.json();
+    const resultMessage = document.createElement('div');
+
+    if (updateResponse.ok) {
+      resultMessage.textContent = `Price for ${product.name} updated to $${updatedPrice}`;
+    } else {
+      resultMessage.textContent = `Failed to update price for ${product.name}: ${updateResult.error}`;
+    }
+
+    resultContainer.appendChild(resultMessage);
+  });
+
+  resultContainer.classList.add('active');
+}
+
+
+    function calculateNewPrice(demand, competitorPrice) {
+      const demandFactor = demand > 50 ? 1.2 : 1; 
+      const competitorFactor = competitorPrice > 30 ? 0.9 : 1; 
+      return (competitorPrice * demandFactor * competitorFactor).toFixed(2);
+    }
+
+    // Function to logout and redirect to the login page
+    function logout() {
+      sessionStorage.clear();
+      window.location.href = "login.html";  
+    }
+    
+    // Onload, fetch products and analytics
+    window.onload = () => {
+      fetchProducts();
+      fetchAnalytics();
+      showSection('load-products');
+    };
+  </script>
+</body>
+</html>
